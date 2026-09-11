@@ -20,7 +20,7 @@ class Parser:
         tok = self.match(token_type)
         if not tok:
             curr = self.current()
-            raise SyntaxError(f"HowlerError: Expected wand motion {token_type.name}, found {curr.type.name} at line {curr.line}")
+            raise SyntaxError(f"Expected token {token_type.name}, found {curr.type.name} at line {curr.line}")
         return tok
 
     def parse(self):
@@ -79,7 +79,6 @@ class Parser:
             catch_b = self.parse_block()
             return TryCatchNode(try_b, err_var, catch_b)
 
-        # Assignment or Expression statement
         expr = self.parse_expression()
         if isinstance(expr, VariableNode) and self.match(TokenType.ASSIGN):
             val = self.parse_expression()
@@ -170,4 +169,4 @@ class Parser:
             self.expect(TokenType.RPAREN)
             return node
 
-        raise SyntaxError(f"HowlerError: Mispronounced component '{self.current().value}' at line {self.current().line}")
+        raise SyntaxError(f"Unexpected token '{self.current().value}' at line {self.current().line}")

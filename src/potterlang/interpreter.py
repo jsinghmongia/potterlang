@@ -16,7 +16,7 @@ class PotterFunction:
 
     def call(self, interpreter, args):
         if len(args) != len(self.params):
-            raise TypeError(f"HowlerError: Spell '{self.name}' expects {len(self.params)} wand motions, got {len(args)}.")
+            raise TypeError(f"Function '{self.name}' expected {len(self.params)} arguments, got {len(args)}.")
         local_env = Environment(parent=self.closure_env)
         for param, arg in zip(self.params, args):
             local_env.values[param] = arg
@@ -71,7 +71,7 @@ class Interpreter:
             try:
                 return target[idx]
             except IndexError:
-                raise IndexError(f"HowlerError: Spellbook index {idx} out of bounds.")
+                raise IndexError(f"Index {idx} out of bounds.")
 
         if isinstance(node, FunctionDefNode):
             func = PotterFunction(node.name, node.params, node.body, env)
@@ -81,7 +81,7 @@ class Interpreter:
         if isinstance(node, FunctionCallNode):
             func = env.get(node.name)
             if not isinstance(func, PotterFunction):
-                raise TypeError(f"HowlerError: '{node.name}' is not an Incantation.")
+                raise TypeError(f"'{node.name}' is not callable.")
             args = [self.evaluate(arg, env) for arg in node.args]
             return func.call(self, args)
 
@@ -90,7 +90,6 @@ class Interpreter:
             raise ReturnTrigger(val)
 
         if isinstance(node, HaltNode):
-            print("AvadaKedavra: Magic disrupted. Program terminated.")
             sys.exit(0)
 
         if isinstance(node, BlockNode):
@@ -134,4 +133,4 @@ class Interpreter:
             if node.op == TokenType.EQ: return left == right
             if node.op == TokenType.NEQ: return left != right
 
-        raise RuntimeError(f"HowlerError: Unhandled spell construct: {type(node).__name__}")
+        raise RuntimeError(f"Unhandled AST node: {type(node).__name__}")

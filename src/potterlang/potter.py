@@ -10,28 +10,32 @@ def run(code: str, env: Environment):
         ast = Parser(tokens).parse()
         Interpreter().evaluate(ast, env)
     except Exception as e:
-        print(f"\033[91m{e}\033[0m")
+        print(f"Error: {e}", file=sys.stderr)
 
 def repl():
-    print("\033[93m--- The Sorting Hat REPL (PotterLang v1.0) ---")
-    print("Type your incantations. Use 'AvadaKedavra' or Ctrl+C to exit.\033[0m")
+    print("PotterLang 1.0.0 Interactive REPL")
+    print("Enter 'AvadaKedavra' or press Ctrl+C to exit.")
     env = Environment()
     while True:
         try:
-            line = input("🪄 > ")
+            line = input(">>> ")
             if not line.strip():
                 continue
             run(line, env)
         except (KeyboardInterrupt, EOFError):
-            print("\nMischief Managed.")
+            print("\nExiting.")
             break
 
 def main():
     if len(sys.argv) > 1:
         filepath = sys.argv[1]
-        with open(filepath, "r") as f:
-            code = f.read()
-        run(code, Environment())
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                code = f.read()
+            run(code, Environment())
+        except FileNotFoundError:
+            print(f"Error: File '{filepath}' not found.", file=sys.stderr)
+            sys.exit(1)
     else:
         repl()
 

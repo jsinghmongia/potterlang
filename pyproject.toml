@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "potterlang"
-version = "0.1.0"
+version = "0.1.1"
 description = "An esoteric, wizarding-themed interpreted programming language."
 readme = "README.md"
 requires-python = ">=3.10"

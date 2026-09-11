@@ -70,7 +70,7 @@ class Lexer:
                 actual_val = True if val == "true" else False if val == "false" else val
                 self.tokens.append(Token(tok_type, actual_val, self.line))
             elif kind == "MISMATCH":
-                raise SyntaxError(f"HowlerError: Unknown magical rune '{val}' at line {self.line}")
+                raise SyntaxError(f"Unexpected character '{val}' at line {self.line}")
             else:
                 self.tokens.append(Token(TokenType[kind], val, self.line))
 

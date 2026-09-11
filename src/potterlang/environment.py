@@ -19,11 +19,11 @@ class Environment:
         if self.parent:
             self.parent.assign(name, value)
             return
-        raise NameError(f"HowlerError: Cannot modify '{name}'. It has not been summoned via 'Accio'.")
+        raise NameError(f"Cannot assign to undefined variable '{name}'.")
 
     def get(self, name: str):
         if name in self.values:
             return self.values[name]
         if self.parent:
             return self.parent.get(name)
-        raise NameError(f"HowlerError: '{name}' does not exist in your spellbook.")
+        raise NameError(f"Undefined variable '{name}'.")
