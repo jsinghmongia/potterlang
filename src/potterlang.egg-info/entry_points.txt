@@ -1,0 +1,2 @@
+[console_scripts]
+potter = potterlang.potter:main

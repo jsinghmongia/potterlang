@@ -1,0 +1,29 @@
+Metadata-Version: 2.4
+Name: potterlang
+Version: 0.1.0
+Summary: An esoteric, wizarding-themed interpreted programming language.
+Author: Jaspreet Singh
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+
+# 🪄 PotterLang (.wand)
+
+A Harry Potter-themed interpreted programming language written in Python.
+
+## Installation
+bash
+pip install potterlang
+## Quick Start
+Create a file named `spell.wand`:
+potter
+Accio house_points = 50
+Lumos "Evaluating House Points..."
+Riddikulus (house_points > 40) {
+    Lumos "10 points to Gryffindor!"
+} Finite {
+    Lumos "Sent to Azkaban!"
+}
+
+## Run it from any terminal:
+bash
+potter spell.wand
