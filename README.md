@@ -1,10 +1,12 @@
 # PotterLang
 
-**PotterLang** is an interpreted, Harry Potter-themed programming language implemented in Python.
+PotterLang is an interpreted, wizarding-themed programming language implemented in Python.
 
-PotterLang uses magical incantations as programming constructs while retaining familiar programming concepts such as variables, expressions, conditionals, loops, functions, arrays, exception handling, lexical analysis, parsing, scoped environments, and tree-walk interpretation.
+The language combines familiar programming concepts with magical terminology. Programs support variables, expressions, conditionals, loops, functions, recursion, arrays, input, exception handling, scoped environments, and a tree-walk interpreter.
 
-PotterLang source files use the `.wand` extension.
+PotterLang source files use the `.wand` file extension.
+
+The current package version is **0.1.2**.
 
 ---
 
@@ -12,223 +14,152 @@ PotterLang source files use the `.wand` extension.
 
 1. [Introduction](#introduction)
 2. [Features](#features)
-3. [Architecture](#architecture)
-4. [Project Structure](#project-structure)
-5. [Installation](#installation)
-6. [Running PotterLang](#running-potterlang)
-7. [Your First PotterLang Program](#your-first-potterlang-program)
-8. [Language Syntax](#language-syntax)
-9. [Variables](#variables)
-10. [Data Types](#data-types)
-11. [Operators](#operators)
+3. [Requirements](#requirements)
+4. [Installation](#installation)
+5. [Running PotterLang](#running-potterlang)
+6. [REPL](#repl)
+7. [Your First Program](#your-first-program)
+8. [Source File Structure](#source-file-structure)
+9. [Language Basics](#language-basics)
+10. [Variables](#variables)
+11. [Data Types](#data-types)
 12. [Output](#output)
-13. [Conditionals](#conditionals)
-14. [Loops](#loops)
-15. [Functions](#functions)
-16. [Return Values](#return-values)
-17. [Recursion](#recursion)
-18. [Exception Handling](#exception-handling)
-19. [Arrays](#arrays)
-20. [Array Access and Mutation](#array-access-and-mutation)
-21. [Comments](#comments)
-22. [Scope](#scope)
-23. [Complete Programs](#complete-programs)
-24. [Language Keyword Reference](#language-keyword-reference)
-25. [Operator Reference](#operator-reference)
-26. [File Extension](#file-extension)
-27. [Interpreter Architecture](#interpreter-architecture)
-28. [Example Programs](#example-programs)
+13. [Input](#input)
+14. [Arithmetic Operators](#arithmetic-operators)
+15. [Comparison Operators](#comparison-operators)
+16. [Logical Operators](#logical-operators)
+17. [Unary Operators](#unary-operators)
+18. [Operator Precedence](#operator-precedence)
+19. [Conditionals](#conditionals)
+20. [Loops](#loops)
+21. [Functions](#functions)
+22. [Return Values](#return-values)
+23. [Recursion](#recursion)
+24. [Arrays](#arrays)
+25. [Array Access](#array-access)
+26. [Array Mutation](#array-mutation)
+27. [Comments](#comments)
+28. [Exception Handling](#exception-handling)
+29. [Program Termination](#program-termination)
+30. [Scope and Environments](#scope-and-environments)
+31. [Identifiers](#identifiers)
+32. [Strings](#strings)
+33. [Complete Examples](#complete-examples)
+34. [Keyword Reference](#keyword-reference)
+35. [Operator Reference](#operator-reference)
+36. [Interpreter Architecture](#interpreter-architecture)
+37. [Project Structure](#project-structure)
+38. [Current Language Limitations](#current-language-limitations)
 
 ---
 
 # Introduction
 
-PotterLang is designed as an educational and experimental programming language where traditional programming concepts are represented using terminology inspired by the Harry Potter universe.
+PotterLang is an esoteric programming language inspired by the magical world of Harry Potter.
 
-Instead of writing:
+The language replaces conventional programming terminology with magical incantations while preserving familiar programming structures.
 
-```text
-var score = 100
-```
-
-PotterLang uses:
+For example, variable declaration:
 
 ```text
 Accio score = 100
 ```
 
-Instead of:
-
-```text
-print(score)
-```
-
-PotterLang uses:
+Output:
 
 ```text
 Lumos score
 ```
 
-Instead of:
+Conditional execution:
 
 ```text
-if (score >= 50)
+Riddikulus (score >= 50) {
+    Lumos "Passed"
+}
 ```
 
-PotterLang uses:
+Function declaration:
 
 ```text
-Riddikulus (score >= 50)
+Incantation add(a, b) {
+    ExpectoPatronum a + b
+}
 ```
 
-The goal is not to replace conventional programming languages, but to provide a fun language through which concepts such as lexical analysis, parsing, abstract syntax trees, environments, functions, recursion, and interpretation can be explored.
+The magical terminology is only the surface syntax. Internally, PotterLang uses the same fundamental concepts found in traditional interpreters:
+
+```text
+Source Code
+    |
+    v
+  Lexer
+    |
+    v
+  Tokens
+    |
+    v
+  Parser
+    |
+    v
+Abstract Syntax Tree
+    |
+    v
+Environment
+    |
+    v
+Interpreter
+    |
+    v
+Execution
+```
 
 ---
 
 # Features
 
-PotterLang currently provides the following language features:
+PotterLang currently supports:
 
-* Variable declaration and assignment
-* Integers
-* Floating-point numbers
-* Strings
-* Booleans
+* Variable declaration
+* Variable assignment
+* Integer values
+* Floating-point values
+* String values
+* Boolean values
 * Arrays
 * Arithmetic expressions
-* Comparison expressions
-* Logical expressions
+* String concatenation
+* Comparison operators
+* Logical operators
+* Unary operators
 * Conditional statements
 * `while`-style loops
 * User-defined functions
 * Function parameters
-* Return values
+* Function return values
 * Recursive functions
-* Lexical scoping
 * Function closures
-* Exception handling
+* Lexical environments
 * Array indexing
 * Array mutation
-* Tree-walk interpretation
+* User input
+* Exception handling
+* Program termination
+* Comments
+* Interactive REPL
 * `.wand` source files
 
 ---
 
-# Architecture
-
-PotterLang follows a traditional interpreter pipeline.
-
-```text
-PotterLang Source
-       |
-       v
-     Lexer
-       |
-       v
-     Tokens
-       |
-       v
-     Parser
-       |
-       v
-  Abstract Syntax Tree
-       |
-       v
-   Environment
-       |
-       v
- Interpreter
-       |
-       v
-    Output
-```
-
-The major components are:
-
-### Lexer
-
-The lexer reads raw PotterLang source code and converts it into a sequence of tokens.
-
-### Parser
-
-The parser consumes the token stream and constructs an Abstract Syntax Tree (AST).
-
-### AST
-
-The AST represents the structure of the PotterLang program.
-
-### Environment
-
-The environment stores variables, functions, scopes, and bindings required during execution.
-
-### Interpreter
-
-The interpreter walks through the AST and evaluates each node.
-
----
-
-# Project Structure
-
-A typical PotterLang project contains the following files:
-
-```text
-PotterLang/
-│
-├── tokens.py
-├── lexer.py
-├── ast_nodes.py
-├── parser.py
-├── environment.py
-├── interpreter.py
-├── potter.py
-│
-└── examples/
-    ├── hello.wand
-    ├── bubble_sort.wand
-    └── binary_search.wand
-```
-
-## `tokens.py`
-
-Contains token definitions and token representation used by the lexer and parser.
-
-## `lexer.py`
-
-Converts PotterLang source code into tokens.
-
-## `ast_nodes.py`
-
-Contains the AST node definitions representing expressions and statements.
-
-## `parser.py`
-
-Implements recursive-descent parsing and converts tokens into an AST.
-
-## `environment.py`
-
-Implements variable environments, scope handling, function bindings, and closures.
-
-## `interpreter.py`
-
-Walks the AST and evaluates the program.
-
-## `potter.py`
-
-Acts as the main command-line entry point for running `.wand` programs.
-
----
-
-# Installation
-
-## Requirements
+# Requirements
 
 PotterLang requires:
 
 ```text
-Python 3.8+
+Python 3.10 or newer
 ```
 
-Verify your Python installation:
+Check your Python version:
 
 ```bash
 python --version
@@ -240,15 +171,43 @@ or:
 python3 --version
 ```
 
-Clone or download the PotterLang repository and open a terminal in the project directory.
+---
 
-No external runtime is required beyond Python unless the project specifies additional dependencies.
+# Installation
+
+PotterLang is packaged as a Python project.
+
+From the repository root, install it with:
+
+```bash
+pip install .
+```
+
+For development, an editable installation can be used:
+
+```bash
+pip install -e .
+```
+
+After installation, the `potter` command becomes available.
+
+Verify the installation:
+
+```bash
+potter
+```
+
+Running `potter` without a file starts the PotterLang REPL.
 
 ---
 
 # Running PotterLang
 
-A PotterLang program is stored in a file ending in `.wand`.
+PotterLang programs are stored in files ending with:
+
+```text
+.wand
+```
 
 For example:
 
@@ -256,21 +215,57 @@ For example:
 hello.wand
 ```
 
-Run it with:
-
-```bash
-python potter.py hello.wand
-```
-
-If the PotterLang CLI has been installed and registered globally:
+Run a PotterLang program with:
 
 ```bash
 potter hello.wand
 ```
 
+The interpreter reads the source file, tokenizes it, parses it into an Abstract Syntax Tree, and evaluates the resulting tree.
+
 ---
 
-# Your First PotterLang Program
+# REPL
+
+PotterLang also provides an interactive Read-Eval-Print Loop.
+
+Start the REPL with:
+
+```bash
+potter
+```
+
+The interpreter displays:
+
+```text
+PotterLang 1.0.0 Interactive REPL
+```
+
+You can then enter PotterLang statements interactively:
+
+```text
+>>> Accio score = 100
+>>> Lumos score
+100
+```
+
+The REPL maintains the same environment between entered expressions.
+
+To exit the REPL, use:
+
+```text
+AvadaKedavra
+```
+
+or press:
+
+```text
+Ctrl+C
+```
+
+---
+
+# Your First Program
 
 Create a file named:
 
@@ -287,10 +282,10 @@ Lumos "Hello, Hogwarts!"
 Run:
 
 ```bash
-python potter.py hello.wand
+potter hello.wand
 ```
 
-The program produces:
+Output:
 
 ```text
 Hello, Hogwarts!
@@ -306,13 +301,89 @@ Lumos "Wizard: " + wizard
 Lumos "House: " + house
 ```
 
+Output:
+
+```text
+Wizard: Harry
+House: Gryffindor
+```
+
 ---
 
-# Language Syntax
+# Source File Structure
 
-PotterLang uses a syntax inspired by conventional programming languages.
+The interpreter is organized as a Python package:
 
-Statements are generally written one after another.
+```text
+potterlang/
+│
+├── src/
+│   └── potterlang/
+│       ├── __init__.py
+│       ├── ast_nodes.py
+│       ├── environment.py
+│       ├── interpreter.py
+│       ├── lexer.py
+│       ├── parser.py
+│       ├── potter.py
+│       └── tokens.py
+│
+├── compiler-web/
+├── dist/
+├── test.wand
+├── test_algo.wand
+├── pyproject.toml
+└── README.md
+```
+
+## `lexer.py`
+
+The lexer converts raw PotterLang source code into tokens.
+
+It recognizes:
+
+* Keywords
+* Identifiers
+* Numbers
+* Strings
+* Operators
+* Parentheses
+* Braces
+* Array brackets
+* Commas
+* Comments
+
+## `tokens.py`
+
+Defines the token types used by the lexer and parser.
+
+## `parser.py`
+
+Consumes the token stream and builds the Abstract Syntax Tree.
+
+PotterLang uses a recursive-descent parser.
+
+## `ast_nodes.py`
+
+Contains the AST node classes representing PotterLang programs.
+
+## `environment.py`
+
+Implements variable environments and parent-child scope relationships.
+
+## `interpreter.py`
+
+Walks the AST and evaluates the program.
+
+## `potter.py`
+
+Provides the command-line entry point, file execution, and REPL.
+
+---
+
+# Language Basics
+
+PotterLang statements do not require semicolons.
 
 Example:
 
@@ -324,7 +395,7 @@ Lumos name
 Lumos age
 ```
 
-Blocks of statements are enclosed in curly braces:
+Blocks are enclosed using curly braces:
 
 ```text
 Riddikulus (age >= 17) {
@@ -332,13 +403,17 @@ Riddikulus (age >= 17) {
 }
 ```
 
-Expressions can contain literals, variables, operators, function calls, and array access.
+Expressions may be used anywhere an expression is expected.
 
 ---
 
 # Variables
 
-Variables are declared using the `Accio` keyword.
+Variables are introduced using:
+
+```text
+Accio
+```
 
 ## Declaration
 
@@ -346,36 +421,48 @@ Variables are declared using the `Accio` keyword.
 Accio score = 100
 ```
 
-Another example:
-
 ```text
 Accio wizard = "Harry"
 ```
 
-Boolean values can be assigned directly:
-
 ```text
-Accio is_alive = true
+Accio alive = true
 ```
 
-Variables can also contain expressions:
+A variable can contain an expression:
 
 ```text
 Accio score = 50 + 25
 ```
 
-Variables can be reassigned using `Accio`:
+## Assignment
+
+Existing variables can be reassigned using `=`:
 
 ```text
 Accio score = 100
-Accio score = 150
+
+score = 150
+```
+
+The `Accio` keyword is used for declarations, while ordinary assignment can be used for an existing variable.
+
+Inside a loop:
+
+```text
+Accio counter = 1
+
+TimeTurner (counter <= 5) {
+    Lumos counter
+    counter = counter + 1
+}
 ```
 
 ---
 
 # Data Types
 
-PotterLang supports the following fundamental data types.
+PotterLang currently supports four primitive value categories and arrays.
 
 ## Integer
 
@@ -395,18 +482,20 @@ Accio temperature = 21.5
 Accio price = 12.75
 ```
 
+Numbers containing a decimal point are represented as floating-point values.
+
 ## String
 
-Text values are enclosed in double quotation marks:
+Strings are enclosed in double quotation marks:
 
 ```text
-Accio name = "Harry"
+Accio wizard = "Harry"
 Accio spell = "Expelliarmus"
 ```
 
 ## Boolean
 
-PotterLang provides two boolean values:
+PotterLang has two boolean literals:
 
 ```text
 true
@@ -416,27 +505,138 @@ false
 Example:
 
 ```text
-Accio wizard = true
+Accio alive = true
 Accio defeated = false
 ```
 
 ## Array
 
-Arrays contain multiple values:
+Arrays are enclosed in square brackets:
 
 ```text
-Accio spells = ["Lumos", "Accio", "Expelliarmus"]
+Accio spells = ["Lumos", "Accio", "Protego"]
 ```
 
-Arrays can contain values of the supported types.
+Arrays can contain expressions:
+
+```text
+Accio a = 10
+Accio b = 20
+
+Accio numbers = [a, b, a + b]
+```
 
 ---
 
-# Operators
+# Output
 
-## Arithmetic Operators
+The `Lumos` keyword prints the value of an expression.
 
-PotterLang supports:
+## String
+
+```text
+Lumos "Mischief Managed"
+```
+
+## Variable
+
+```text
+Accio score = 100
+
+Lumos score
+```
+
+## Expression
+
+```text
+Accio a = 10
+Accio b = 20
+
+Lumos a + b
+```
+
+## String Concatenation
+
+When `+` is used and either operand is a string, PotterLang automatically converts the other operand to a string.
+
+For example:
+
+```text
+Accio wizard = "Harry"
+Accio score = 100
+
+Lumos wizard + " scored " + score + " points."
+```
+
+Output:
+
+```text
+Harry scored 100 points.
+```
+
+---
+
+# Input
+
+PotterLang uses:
+
+```text
+Legilimens
+```
+
+to read user input.
+
+Syntax:
+
+```text
+Legilimens(prompt)
+```
+
+Example:
+
+```text
+Accio name = Legilimens("Enter your name: ")
+
+Lumos "User: " + name
+```
+
+The input system attempts to convert numeric input automatically.
+
+For example:
+
+```text
+Accio age = Legilimens("Enter your age: ")
+```
+
+If the user enters:
+
+```text
+17
+```
+
+the resulting value is an integer.
+
+If the user enters:
+
+```text
+17.5
+```
+
+the resulting value is a floating-point number.
+
+Other input remains a string.
+
+`Legilimens()` may also be used without a prompt:
+
+```text
+Accio value = Legilimens()
+```
+
+---
+
+# Arithmetic Operators
+
+PotterLang supports the following arithmetic operators:
 
 ```text
 +
@@ -446,29 +646,78 @@ PotterLang supports:
 %
 ```
 
-Example:
+## Addition
 
 ```text
-Accio a = 20
-Accio b = 5
-
-Lumos a + b
-Lumos a - b
-Lumos a * b
-Lumos a / b
-Lumos a % b
+Lumos 10 + 5
 ```
 
-Expressions can be combined:
+Result:
 
 ```text
-Accio result = 10 + 5 * 2
+15
 ```
 
-Parentheses can be used to control evaluation order:
+## Subtraction
 
 ```text
-Accio result = (10 + 5) * 2
+Lumos 10 - 5
+```
+
+Result:
+
+```text
+5
+```
+
+## Multiplication
+
+```text
+Lumos 10 * 5
+```
+
+Result:
+
+```text
+50
+```
+
+## Division
+
+```text
+Lumos 10 / 5
+```
+
+Result:
+
+```text
+2.0
+```
+
+## Modulo
+
+```text
+Lumos 10 % 3
+```
+
+Result:
+
+```text
+1
+```
+
+## Parentheses
+
+Parentheses can be used to explicitly control evaluation order:
+
+```text
+Lumos (10 + 5) * 2
+```
+
+Result:
+
+```text
+30
 ```
 
 ---
@@ -480,99 +729,191 @@ PotterLang supports:
 ```text
 ==
 !=
-<
 >
-<=
+<
 >=
+<=
 ```
 
-Examples:
+## Equal
 
 ```text
 Lumos 10 == 10
-Lumos 10 != 5
-Lumos 5 < 10
-Lumos 10 > 5
-Lumos 10 <= 10
-Lumos 10 >= 5
 ```
 
-Comparison expressions evaluate to a boolean value.
+## Not Equal
+
+```text
+Lumos 10 != 5
+```
+
+## Greater Than
+
+```text
+Lumos 10 > 5
+```
+
+## Less Than
+
+```text
+Lumos 5 < 10
+```
+
+## Greater Than or Equal
+
+```text
+Lumos 10 >= 10
+```
+
+## Less Than or Equal
+
+```text
+Lumos 5 <= 10
+```
+
+Comparison expressions evaluate to boolean values.
 
 ---
 
 # Logical Operators
 
-PotterLang supports:
+PotterLang uses symbolic logical operators.
+
+## AND
 
 ```text
-and
-or
-not
+&&
 ```
 
-Examples:
+Example:
 
 ```text
-Accio age = 18
-Accio has_permission = true
+Accio age = 20
+Accio permission = true
 
-Riddikulus (age >= 18 and has_permission) {
+Riddikulus (age >= 18 && permission) {
     Lumos "Access granted."
 }
 ```
 
-Using `or`:
+Both conditions must be true.
+
+## OR
 
 ```text
-Riddikulus (age >= 18 or has_permission) {
+||
+```
+
+Example:
+
+```text
+Riddikulus (age >= 18 || permission) {
     Lumos "Access granted."
 }
 ```
 
-Using `not`:
+At least one condition must be true.
+
+## NOT
 
 ```text
-Riddikulus (not false) {
-    Lumos "The spell is active."
+!
+```
+
+Example:
+
+```text
+Accio locked = false
+
+Riddikulus (!locked) {
+    Lumos "The door is open."
 }
+```
+
+The `!` operator reverses the boolean value.
+
+---
+
+# Unary Operators
+
+PotterLang supports unary:
+
+```text
+!
+-
+```
+
+## Logical NOT
+
+```text
+!true
+```
+
+produces:
+
+```text
+false
+```
+
+## Numeric Negation
+
+```text
+-10
+```
+
+produces:
+
+```text
+-10
+```
+
+Variables can also be negated:
+
+```text
+Accio score = 100
+
+Lumos -score
 ```
 
 ---
 
-# Output
+# Operator Precedence
 
-The `Lumos` keyword prints an expression to standard output.
-
-## Printing a string
+Expressions are parsed in the following general order, from lower precedence to higher precedence:
 
 ```text
-Lumos "Mischief Managed"
+Logical OR       ||
+Logical AND      &&
+Comparison       == != > < >= <=
+Addition         + -
+Multiplication  * / %
+Unary            ! -
+Postfix          [] ()
+Primary          literals, identifiers, arrays, parentheses
 ```
 
-## Printing a variable
+Therefore:
 
 ```text
-Accio score = 100
-Lumos score
+10 + 5 * 2
 ```
 
-## Printing an expression
+is interpreted as:
 
 ```text
-Accio a = 10
-Accio b = 20
-
-Lumos a + b
+10 + (5 * 2)
 ```
 
-## Combining strings and values
+while:
 
 ```text
-Accio wizard = "Harry"
-Accio score = 100
+(10 + 5) * 2
+```
 
-Lumos wizard + " scored " + score + " points."
+is interpreted as:
+
+```text
+(10 + 5) * 2
 ```
 
 ---
@@ -581,7 +922,7 @@ Lumos wizard + " scored " + score + " points."
 
 PotterLang uses `Riddikulus` for conditional execution.
 
-## If Statement
+Syntax:
 
 ```text
 Riddikulus (condition) {
@@ -605,6 +946,8 @@ Riddikulus (score >= 50) {
 
 The `Finite` keyword represents the alternative branch.
 
+Syntax:
+
 ```text
 Riddikulus (condition) {
     statements
@@ -619,9 +962,29 @@ Example:
 Accio score = 40
 
 Riddikulus (score >= 50) {
-    Lumos "Passed the O.W.L. exam!"
+    Lumos "Passed!"
 } Finite {
-    Lumos "Troll grade received."
+    Lumos "Failed!"
+}
+```
+
+---
+
+# Nested Conditionals
+
+Conditionals can be placed inside other conditionals.
+
+```text
+Accio score = 85
+
+Riddikulus (score >= 50) {
+    Riddikulus (score >= 80) {
+        Lumos "Outstanding!"
+    } Finite {
+        Lumos "Passed!"
+    }
+} Finite {
+    Lumos "Failed!"
 }
 ```
 
@@ -646,7 +1009,7 @@ Accio counter = 1
 
 TimeTurner (counter <= 5) {
     Lumos counter
-    Accio counter = counter + 1
+    counter = counter + 1
 }
 ```
 
@@ -660,13 +1023,17 @@ Output:
 5
 ```
 
-The condition is evaluated before every iteration.
+The loop condition is evaluated before each iteration.
 
 ---
 
 # Functions
 
-Functions are declared using the `Incantation` keyword.
+Functions are declared using:
+
+```text
+Incantation
+```
 
 Syntax:
 
@@ -679,17 +1046,17 @@ Incantation functionName(parameters) {
 Example:
 
 ```text
-Incantation addGalleons(a, b) {
+Incantation add(a, b) {
     ExpectoPatronum a + b
 }
 ```
 
-The function can then be called:
+Functions are called using their name followed by parentheses:
 
 ```text
-Accio total = addGalleons(10, 25)
+Accio result = add(10, 25)
 
-Lumos total
+Lumos result
 ```
 
 Output:
@@ -700,50 +1067,41 @@ Output:
 
 ---
 
-# Function Parameters
+# Functions Without Parameters
 
-Functions may accept zero or more parameters.
-
-## No parameters
+A function can have no parameters:
 
 ```text
 Incantation greet() {
     Lumos "Hello, wizard!"
 }
-```
 
-Call:
-
-```text
 greet()
 ```
 
-## One parameter
+---
+
+# Functions With Parameters
+
+A function may accept one or more parameters:
 
 ```text
 Incantation greet(name) {
     Lumos "Hello, " + name
 }
-```
 
-Call:
-
-```text
 greet("Harry")
 ```
 
-## Multiple parameters
+Multiple parameters are separated by commas:
 
 ```text
 Incantation multiply(a, b) {
     ExpectoPatronum a * b
 }
-```
 
-Call:
-
-```text
 Accio result = multiply(5, 4)
+
 Lumos result
 ```
 
@@ -775,17 +1133,7 @@ Output:
 64
 ```
 
-A function can return from within a conditional:
-
-```text
-Incantation checkScore(score) {
-    Riddikulus (score >= 50) {
-        ExpectoPatronum "Passed"
-    } Finite {
-        ExpectoPatronum "Failed"
-    }
-}
-```
+A return statement immediately exits the current function.
 
 ---
 
@@ -815,51 +1163,11 @@ Output:
 120
 ```
 
-Recursive calls are evaluated using the runtime's function and environment stack.
-
----
-
-# Exception Handling
-
-PotterLang provides exception handling using two magical keywords:
-
-```text
-Protego
-Crucio
-```
-
-`Protego` defines the protected section of code.
-
-`Crucio` handles an exception raised inside that section.
-
-Syntax:
-
-```text
-Protego {
-    statements
-} Crucio (errorVariable) {
-    statements
-}
-```
-
-Example:
-
-```text
-Protego {
-    Accio result = 100 / 0
-    Lumos result
-} Crucio (curse) {
-    Lumos "Defense triggered! Hex intercepted: " + curse
-}
-```
-
-The exception information is made available through the variable specified by `Crucio`.
-
 ---
 
 # Arrays
 
-Arrays are created using square brackets.
+Arrays are represented using square brackets.
 
 Example:
 
@@ -871,34 +1179,37 @@ Accio spells = [
 ]
 ```
 
-Arrays can contain numbers:
+Arrays may contain numbers:
 
 ```text
 Accio numbers = [10, 20, 30, 40, 50]
 ```
 
-Arrays can be passed to functions:
+Arrays may contain expressions:
 
 ```text
-Incantation first(arr) {
-    ExpectoPatronum arr[0]
-}
+Accio a = 10
+Accio b = 20
 
-Accio spells = ["Lumos", "Accio", "Protego"]
+Accio values = [a, b, a + b]
+```
 
-Lumos first(spells)
+An empty array is valid:
+
+```text
+Accio empty = []
 ```
 
 ---
 
-# Array Access and Mutation
+# Array Access
 
 Array indexes begin at `0`.
 
 Given:
 
 ```text
-Accio spells = ["Expelliarmus", "Stupefy", "Alohomora"]
+Accio spells = ["Lumos", "Accio", "Protego"]
 ```
 
 The first element is:
@@ -907,13 +1218,13 @@ The first element is:
 spells[0]
 ```
 
-The second element is:
+The second element:
 
 ```text
 spells[1]
 ```
 
-The third element is:
+The third element:
 
 ```text
 spells[2]
@@ -928,103 +1239,292 @@ Lumos spells[0]
 Output:
 
 ```text
-Expelliarmus
+Lumos
 ```
 
-Array elements can also be modified:
+---
+
+# Dynamic Array Indexing
+
+Array indexes may be expressions.
 
 ```text
-Accio spells[1] = "AvadaKedavra"
+Accio spells = ["Lumos", "Accio", "Protego"]
+Accio index = 1
+
+Lumos spells[index]
 ```
 
-Then:
+Output:
 
 ```text
+Accio
+```
+
+---
+
+# Array Mutation
+
+Array elements can be modified using assignment.
+
+```text
+Accio spells = ["Lumos", "Accio", "Protego"]
+
+spells[1] = "Expelliarmus"
+
 Lumos spells[1]
 ```
 
-produces:
+Output:
 
 ```text
-AvadaKedavra
+Expelliarmus
 ```
 
-Array indexing can also use expressions:
+Array mutation can also use expressions:
 
 ```text
 Accio index = 1
-Lumos spells[index]
+
+spells[index] = "Stupefy"
 ```
 
 ---
 
 # Comments
 
-Comments are intended to allow programmers to document their PotterLang source code.
+Single-line comments begin with:
 
-If comment syntax is implemented in the current lexer, use the supported comment format consistently throughout `.wand` programs.
+```text
+//
+```
 
 Example:
 
 ```text
-// This is a comment
+// This is a PotterLang comment
+
 Accio score = 100
+
+// Display the score
+Lumos score
+```
+
+Everything from `//` to the end of the line is ignored by the lexer.
+
+---
+
+# Exception Handling
+
+PotterLang provides exception handling through:
+
+```text
+Protego
+Crucio
+```
+
+`Protego` starts the protected block.
+
+`Crucio` catches an exception.
+
+Syntax:
+
+```text
+Protego {
+    statements
+} Crucio (error) {
+    statements
+}
+```
+
+Example:
+
+```text
+Protego {
+    Accio result = 100 / 0
+    Lumos result
+} Crucio (curse) {
+    Lumos "Defense triggered: " + curse
+}
+```
+
+The variable inside `Crucio(...)` receives the exception message as a string.
+
+---
+
+# Array Exceptions
+
+Exception handling can also be used to catch invalid array access.
+
+```text
+Accio spells = ["Lumos", "Accio", "Protego"]
+
+Protego {
+    Lumos spells[99]
+} Crucio (err) {
+    Lumos "Caught exception: " + err
+}
 ```
 
 ---
 
-# Scope
+# Program Termination
 
-PotterLang uses environments to manage variable bindings and lexical scope.
+`AvadaKedavra` immediately terminates the interpreter.
 
-A function creates its own execution environment for its parameters and local variables.
+Example:
+
+```text
+Lumos "The spell begins."
+
+AvadaKedavra
+
+Lumos "This will never execute."
+```
+
+`AvadaKedavra` terminates the entire running interpreter process.
+
+It can also be used in the REPL to exit the interactive session.
+
+---
+
+# Scope and Environments
+
+PotterLang uses chained environments to manage variable lookup and assignment.
+
+Each block can create a child environment.
 
 For example:
 
 ```text
 Accio x = 10
 
-Incantation test() {
-    Accio x = 20
+Riddikulus (true) {
+    Accio y = 20
     Lumos x
+    Lumos y
 }
-
-test()
-
-Lumos x
 ```
 
-The `x` inside the function belongs to the function's local scope, while the `x` outside belongs to the surrounding environment.
+The block can access variables from its parent environment.
 
-Functions can retain access to variables from their surrounding environment through closures.
+Functions capture the environment in which they are defined, allowing functions to access surrounding variables.
 
----
-
-# Complete Programs
-
-## Hello Wizard
+Example:
 
 ```text
-Lumos "Hello, Hogwarts!"
+Accio message = "Hello"
+
+Incantation greet() {
+    Lumos message
+}
+
+greet()
 ```
+
+Output:
+
+```text
+Hello
+```
+
+Variable assignment searches the current environment and its parents for an existing binding.
 
 ---
 
-## Student Information
+# Identifiers
+
+Identifiers are used for variable names, function names, and parameters.
+
+An identifier may contain:
+
+* Letters
+* Digits
+* Underscores
+
+An identifier cannot begin with a digit.
+
+Examples of valid identifiers:
+
+```text
+score
+wizard
+student_name
+level1
+calculate_score
+```
+
+Examples of invalid identifiers:
+
+```text
+1score
+2wizard
+```
+
+Language keywords such as `Accio`, `Lumos`, and `Riddikulus` are reserved and should not be used as identifiers.
+
+---
+
+# Strings
+
+Strings use double quotation marks:
+
+```text
+"Hello"
+```
+
+Example:
+
+```text
+Accio spell = "Expelliarmus"
+
+Lumos spell
+```
+
+String concatenation uses `+`:
 
 ```text
 Accio name = "Harry"
 Accio house = "Gryffindor"
+
+Lumos name + " belongs to " + house
+```
+
+When a string participates in a `+` operation, non-string operands are converted to strings automatically.
+
+Example:
+
+```text
+Accio score = 100
+
+Lumos "Score: " + score
+```
+
+Output:
+
+```text
+Score: 100
+```
+
+---
+
+# Complete Examples
+
+## Basic Program
+
+```text
+Accio wizard = "Harry"
+Accio house = "Gryffindor"
 Accio year = 7
 
-Lumos "Name: " + name
+Lumos "Wizard: " + wizard
 Lumos "House: " + house
 Lumos "Year: " + year
 ```
 
 ---
 
-## O.W.L. Grade Checker
+## Grade Checker
 
 ```text
 Accio score = 72
@@ -1042,484 +1542,34 @@ Riddikulus (score >= 90) {
 
 ---
 
-## Counting Program
+## Counter
 
 ```text
 Accio counter = 1
 
 TimeTurner (counter <= 10) {
     Lumos counter
-    Accio counter = counter + 1
+    counter = counter + 1
 }
 ```
 
 ---
 
-# Bubble Sort
-
-PotterLang can be used to implement common algorithms.
-
-The following program implements Bubble Sort:
-
-```text
-Incantation bubbleSort(arr, n) {
-    Accio i = 0
-
-    TimeTurner (i < n - 1) {
-        Accio j = 0
-
-        TimeTurner (j < n - i - 1) {
-            Riddikulus (arr[j] > arr[j + 1]) {
-                Accio temp = arr[j]
-                Accio arr[j] = arr[j + 1]
-                Accio arr[j + 1] = temp
-            }
-
-            Accio j = j + 1
-        }
-
-        Accio i = i + 1
-    }
-
-    ExpectoPatronum arr
-}
-
-Accio numbers = [64, 34, 25, 12, 22, 11, 90]
-
-Accio sorted = bubbleSort(numbers, 7)
-
-Lumos sorted
-```
-
-The algorithm repeatedly compares adjacent elements and swaps them when they are in the wrong order.
-
----
-
-# Binary Search
-
-Binary Search can also be expressed using PotterLang functions, loops, arrays, conditionals, and return values.
-
-```text
-Incantation binarySearch(arr, target, low, high) {
-    TimeTurner (low <= high) {
-        Accio mid = (low + high) / 2
-
-        Riddikulus (arr[mid] == target) {
-            ExpectoPatronum mid
-        }
-
-        Riddikulus (arr[mid] < target) {
-            Accio low = mid + 1
-        } Finite {
-            Accio high = mid - 1
-        }
-    }
-
-    ExpectoPatronum -1
-}
-
-Accio inventory = [10, 20, 30, 40, 50, 60, 70]
-
-Accio targetIndex = binarySearch(
-    inventory,
-    40,
-    0,
-    6
-)
-
-Lumos "Target found at index: " + targetIndex
-```
-
----
-
-# Function Example
-
-A complete function-based program:
+## Function
 
 ```text
 Incantation addGalleons(a, b) {
     ExpectoPatronum a + b
 }
 
-Incantation multiplyGalleons(a, b) {
-    ExpectoPatronum a * b
-}
+Accio total = addGalleons(10, 25)
 
-Accio gold = addGalleons(10, 25)
-Accio total = multiplyGalleons(gold, 2)
-
-Lumos "Gold: " + gold
 Lumos "Total: " + total
 ```
 
 ---
 
-# Exception Example
-
-```text
-Protego {
-    Accio numerator = 100
-    Accio denominator = 0
-
-    Accio result = numerator / denominator
-
-    Lumos result
-} Crucio (curse) {
-    Lumos "A magical error occurred: " + curse
-}
-```
-
----
-
-# Language Keyword Reference
-
-| Keyword           | Purpose                                  |
-| ----------------- | ---------------------------------------- |
-| `Accio`           | Variable declaration or assignment       |
-| `Lumos`           | Print an expression                      |
-| `Riddikulus`      | Conditional / if statement               |
-| `Finite`          | Else branch                              |
-| `TimeTurner`      | While-style loop                         |
-| `Incantation`     | Function declaration                     |
-| `ExpectoPatronum` | Return a value from a function           |
-| `Protego`         | Begin protected exception-handling block |
-| `Crucio`          | Catch an exception                       |
-| `true`            | Boolean true                             |
-| `false`           | Boolean false                            |
-| `and`             | Logical AND                              |
-| `or`              | Logical OR                               |
-| `not`             | Logical NOT                              |
-
----
-
-# Operator Reference
-
-## Arithmetic
-
-| Operator | Meaning        |
-| -------- | -------------- |
-| `+`      | Addition       |
-| `-`      | Subtraction    |
-| `*`      | Multiplication |
-| `/`      | Division       |
-| `%`      | Modulo         |
-
-## Comparison
-
-| Operator | Meaning               |
-| -------- | --------------------- |
-| `==`     | Equal                 |
-| `!=`     | Not equal             |
-| `<`      | Less than             |
-| `>`      | Greater than          |
-| `<=`     | Less than or equal    |
-| `>=`     | Greater than or equal |
-
-## Logical
-
-| Operator | Meaning     |
-| -------- | ----------- |
-| `and`    | Logical AND |
-| `or`     | Logical OR  |
-| `not`    | Logical NOT |
-
----
-
-# File Extension
-
-PotterLang programs use:
-
-```text
-.wand
-```
-
-Example:
-
-```text
-hello.wand
-```
-
-```text
-bubble_sort.wand
-```
-
-```text
-factorial.wand
-```
-
-The `.wand` extension identifies source files intended for the PotterLang interpreter.
-
----
-
-# Interpreter Architecture
-
-PotterLang is implemented as a tree-walk interpreter.
-
-The execution process can be summarized as:
-
-```text
-.wand Source File
-       |
-       v
-     Lexer
-       |
-       v
-     Tokens
-       |
-       v
-     Parser
-       |
-       v
-Abstract Syntax Tree
-       |
-       v
- Environment / Scope
-       |
-       v
-   Interpreter
-       |
-       v
- Program Execution
-```
-
-## Lexical Analysis
-
-The lexer reads the source code character by character and identifies meaningful units such as:
-
-* Keywords
-* Identifiers
-* Numbers
-* Strings
-* Operators
-* Parentheses
-* Braces
-* Brackets
-* Separators
-
-These units are represented as tokens.
-
-## Parsing
-
-The parser consumes the tokens and verifies that they follow the PotterLang grammar.
-
-The parser then creates an Abstract Syntax Tree.
-
-## Abstract Syntax Tree
-
-The AST represents the logical structure of the program.
-
-For example:
-
-```text
-Accio score = 100
-```
-
-is represented conceptually as a variable declaration containing:
-
-```text
-Variable: score
-Value: 100
-```
-
-## Environment
-
-The environment stores runtime values associated with variable names.
-
-For example:
-
-```text
-Accio score = 100
-```
-
-creates a binding conceptually equivalent to:
-
-```text
-score -> 100
-```
-
-Nested environments allow local variables and function scopes to coexist with outer scopes.
-
-## Interpreter
-
-The interpreter walks through the AST and evaluates each node.
-
-For example:
-
-```text
-Accio result = 10 + 20
-```
-
-causes the interpreter to:
-
-1. Evaluate `10`.
-2. Evaluate `20`.
-3. Apply `+`.
-4. Produce `30`.
-5. Store `30` under `result`.
-
----
-
-# Language Design Philosophy
-
-PotterLang is designed around the idea that programming language concepts can be made approachable through a familiar fictional theme.
-
-The magical terminology maps directly to conventional programming concepts:
-
-```text
-Accio             -> variable declaration / assignment
-
-Lumos             -> output
-
-Riddikulus        -> if
-
-Finite            -> else
-
-TimeTurner        -> while loop
-
-Incantation       -> function
-
-ExpectoPatronum   -> return
-
-Protego           -> try
-
-Crucio            -> catch
-```
-
-Despite the themed syntax, the underlying concepts remain conventional programming-language concepts.
-
----
-
-# Complete Syntax Overview
-
-The following examples provide a compact reference for PotterLang syntax.
-
-## Variable
-
-```text
-Accio variable = value
-```
-
-## Assignment
-
-```text
-Accio variable = expression
-```
-
-## Output
-
-```text
-Lumos expression
-```
-
-## Conditional
-
-```text
-Riddikulus (condition) {
-    statements
-}
-```
-
-## Conditional with Else
-
-```text
-Riddikulus (condition) {
-    statements
-} Finite {
-    statements
-}
-```
-
-## Loop
-
-```text
-TimeTurner (condition) {
-    statements
-}
-```
-
-## Function
-
-```text
-Incantation name(parameters) {
-    statements
-}
-```
-
-## Return
-
-```text
-ExpectoPatronum expression
-```
-
-## Exception Handling
-
-```text
-Protego {
-    statements
-} Crucio (error) {
-    statements
-}
-```
-
-## Array
-
-```text
-Accio values = [value1, value2, value3]
-```
-
-## Array Access
-
-```text
-values[index]
-```
-
-## Array Mutation
-
-```text
-Accio values[index] = expression
-```
-
-## Function Call
-
-```text
-functionName(argument1, argument2)
-```
-
----
-
-# Example: Complete PotterLang Program
-
-The following program combines variables, functions, conditionals, loops, arrays, and output:
-
-```text
-Incantation calculateScore(scores) {
-    Accio total = 0
-    Accio i = 0
-
-    TimeTurner (i < 5) {
-        Accio total = total + scores[i]
-        Accio i = i + 1
-    }
-
-    ExpectoPatronum total
-}
-
-Accio scores = [80, 75, 90, 65, 85]
-
-Accio total = calculateScore(scores)
-
-Lumos "Total score: " + total
-
-Riddikulus (total >= 350) {
-    Lumos "Outstanding wizard!"
-} Finite {
-    Lumos "More studying required."
-}
-```
-
----
-
-# Example: Recursive Factorial
+## Recursive Factorial
 
 ```text
 Incantation factorial(n) {
@@ -1537,7 +1587,19 @@ Lumos "Factorial: " + result
 
 ---
 
-# Example: Array Processing
+## Input
+
+```text
+Accio user_name = Legilimens("Enter your name: ")
+Accio age = Legilimens("Enter your age: ")
+
+Lumos "Name: " + user_name
+Lumos "Age: " + age
+```
+
+---
+
+## Arrays
 
 ```text
 Accio spells = [
@@ -1551,26 +1613,521 @@ Accio i = 0
 
 TimeTurner (i < 4) {
     Lumos spells[i]
-    Accio i = i + 1
+    i = i + 1
 }
 ```
 
 ---
 
-# Example: Exception Handling
+## Array Mutation
+
+```text
+Accio spells = [
+    "Lumos",
+    "Accio",
+    "Protego"
+]
+
+spells[1] = "Expelliarmus"
+
+Lumos spells[1]
+```
+
+---
+
+## Exception Handling
+
+```text
+Accio spells = [
+    "Lumos",
+    "Accio",
+    "Protego"
+]
+
+Protego {
+    Lumos spells[99]
+} Crucio (err) {
+    Lumos "Caught exception: " + err
+}
+```
+
+---
+
+# Algorithm Example
+
+PotterLang can express conventional algorithms using variables, loops, arrays, conditionals, functions, and recursion.
+
+For example, a simple recursive calculation:
+
+```text
+Incantation calculate_mana(level, bonus) {
+    Riddikulus (level <= 1) {
+        ExpectoPatronum bonus
+    } Finite {
+        ExpectoPatronum level * 10 + calculate_mana(level - 1, bonus)
+    }
+}
+
+Accio mana = calculate_mana(3, 15)
+
+Lumos "Mana: " + mana
+```
+
+Output:
+
+```text
+Mana: 75
+```
+
+---
+
+# Keyword Reference
+
+| Keyword           | Purpose                         |
+| ----------------- | ------------------------------- |
+| `Accio`           | Declare a variable              |
+| `Lumos`           | Print an expression             |
+| `Riddikulus`      | Conditional statement           |
+| `Finite`          | Else branch                     |
+| `TimeTurner`      | While loop                      |
+| `Incantation`     | Function declaration            |
+| `ExpectoPatronum` | Return a value                  |
+| `Legilimens`      | Read user input                 |
+| `Protego`         | Begin exception-protected block |
+| `Crucio`          | Catch an exception              |
+| `AvadaKedavra`    | Immediately terminate execution |
+| `true`            | Boolean true                    |
+| `false`           | Boolean false                   |
+
+---
+
+# Operator Reference
+
+## Arithmetic Operators
+
+| Operator | Meaning                         |
+| -------- | ------------------------------- |
+| `+`      | Addition / string concatenation |
+| `-`      | Subtraction                     |
+| `*`      | Multiplication                  |
+| `/`      | Division                        |
+| `%`      | Modulo                          |
+
+## Comparison Operators
+
+| Operator | Meaning               |
+| -------- | --------------------- |
+| `==`     | Equal                 |
+| `!=`     | Not equal             |
+| `>`      | Greater than          |
+| `<`      | Less than             |
+| `>=`     | Greater than or equal |
+| `<=`     | Less than or equal    |
+
+## Logical Operators
+
+| Operator | Meaning     |   |            |
+| -------- | ----------- | - | ---------- |
+| `&&`     | Logical AND |   |            |
+| `        |             | ` | Logical OR |
+| `!`      | Logical NOT |   |            |
+
+---
+
+# Syntax Reference
+
+## Variable Declaration
+
+```text
+Accio name = expression
+```
+
+## Variable Assignment
+
+```text
+name = expression
+```
+
+## Output
+
+```text
+Lumos expression
+```
+
+## Input
+
+```text
+Legilimens()
+```
+
+or:
+
+```text
+Legilimens(prompt)
+```
+
+## Conditional
+
+```text
+Riddikulus (condition) {
+    statements
+}
+```
+
+## Conditional With Else
+
+```text
+Riddikulus (condition) {
+    statements
+} Finite {
+    statements
+}
+```
+
+## Loop
+
+```text
+TimeTurner (condition) {
+    statements
+}
+```
+
+## Function Declaration
+
+```text
+Incantation name(parameters) {
+    statements
+}
+```
+
+## Function Return
+
+```text
+ExpectoPatronum expression
+```
+
+## Function Call
+
+```text
+name(arguments)
+```
+
+## Array
+
+```text
+[value1, value2, value3]
+```
+
+## Array Access
+
+```text
+array[index]
+```
+
+## Array Assignment
+
+```text
+array[index] = expression
+```
+
+## Exception Handling
 
 ```text
 Protego {
-    Accio x = 10
-    Accio y = 0
-
-    Accio result = x / y
-
-    Lumos result
-} Crucio (curse) {
-    Lumos "Spell failed: " + curse
+    statements
+} Crucio (error) {
+    statements
 }
 ```
+
+## Program Termination
+
+```text
+AvadaKedavra
+```
+
+## Comment
+
+```text
+// comment
+```
+
+---
+
+# Interpreter Architecture
+
+PotterLang is implemented as a tree-walk interpreter.
+
+The execution pipeline is:
+
+```text
+PotterLang Source
+       |
+       v
+     Lexer
+       |
+       v
+     Tokens
+       |
+       v
+     Parser
+       |
+       v
+Abstract Syntax Tree
+       |
+       v
+   Environment
+       |
+       v
+   Interpreter
+       |
+       v
+    Execution
+```
+
+## 1. Source Code
+
+A `.wand` file contains PotterLang source code.
+
+Example:
+
+```text
+Accio score = 100
+Lumos score
+```
+
+## 2. Lexical Analysis
+
+The lexer reads the source code and produces tokens.
+
+For example:
+
+```text
+Accio score = 100
+```
+
+is broken into conceptual tokens:
+
+```text
+ACCIO
+IDENTIFIER(score)
+ASSIGN
+NUMBER(100)
+```
+
+## 3. Parsing
+
+The parser consumes these tokens and constructs an Abstract Syntax Tree.
+
+The parser uses recursive-descent parsing.
+
+## 4. Abstract Syntax Tree
+
+The AST represents the structure of the program.
+
+PotterLang defines AST nodes for constructs including:
+
+* Program
+* Variable declaration
+* Variable assignment
+* Array assignment
+* Print
+* Input
+* Conditional
+* Loop
+* Block
+* Function declaration
+* Function call
+* Return
+* Array literal
+* Array access
+* Exception handling
+* Binary expressions
+* Unary expressions
+* Literals
+* Variables
+* Program termination
+
+## 5. Environment
+
+The environment stores runtime variable bindings.
+
+Environments can reference parent environments:
+
+```text
+Current Environment
+        |
+        v
+Parent Environment
+        |
+        v
+Global Environment
+```
+
+This allows nested scopes and functions to access values from surrounding environments.
+
+## 6. Interpretation
+
+The interpreter walks the AST and evaluates each node.
+
+For example:
+
+```text
+Accio result = 10 + 20
+```
+
+is evaluated by:
+
+```text
+10
++
+20
+=
+30
+```
+
+The resulting value is then stored in the current environment.
+
+---
+
+# Project Structure
+
+The main interpreter implementation is located under:
+
+```text
+src/potterlang/
+```
+
+The source files are:
+
+```text
+src/potterlang/
+├── __init__.py
+├── ast_nodes.py
+├── environment.py
+├── interpreter.py
+├── lexer.py
+├── parser.py
+├── potter.py
+└── tokens.py
+```
+
+### `ast_nodes.py`
+
+Defines the Abstract Syntax Tree node classes.
+
+### `environment.py`
+
+Implements variable environments and parent-scope lookup.
+
+### `interpreter.py`
+
+Contains the tree-walk interpreter and runtime behavior.
+
+### `lexer.py`
+
+Converts source code into tokens.
+
+### `parser.py`
+
+Converts tokens into an AST.
+
+### `potter.py`
+
+Provides:
+
+* Source-file execution
+* REPL functionality
+* CLI entry point
+
+### `tokens.py`
+
+Defines the token types and token representation.
+
+---
+
+# Current Language Limitations
+
+PotterLang is an experimental and educational programming language.
+
+The current implementation intentionally provides a relatively small runtime.
+
+The following should not be assumed to exist unless explicitly implemented in the interpreter:
+
+* Standard-library functions
+* `len()`
+* `floor()`
+* File I/O
+* Networking
+* Classes
+* Objects
+* Modules
+* Imports
+* Exception types
+* User-defined exception classes
+* For loops
+* Switch statements
+* Dictionaries / maps
+* Built-in collection methods
+
+For example, the following should not currently be considered standard PotterLang syntax:
+
+```text
+len(array)
+```
+
+or:
+
+```text
+floor(number)
+```
+
+unless those functions are added to the runtime.
+
+---
+
+# Language Design Philosophy
+
+PotterLang intentionally maps traditional programming concepts to magical terminology.
+
+The language vocabulary is:
+
+```text
+Accio
+    Variable declaration
+
+Lumos
+    Output
+
+Legilimens
+    Input
+
+Riddikulus
+    If / conditional
+
+Finite
+    Else
+
+TimeTurner
+    While loop
+
+Incantation
+    Function
+
+ExpectoPatronum
+    Return
+
+Protego
+    Try / protected execution
+
+Crucio
+    Catch / exception handling
+
+AvadaKedavra
+    Terminate execution
+```
+
+The goal is to make the language recognizable as a programming language while giving every major construct a consistent magical identity.
 
 ---
 
@@ -1595,37 +2152,50 @@ Accio result = getResult(score)
 Lumos wizard + ": " + result
 
 TimeTurner (score < 100) {
-    Accio score = score + 5
+    score = score + 5
 }
 
 Lumos "Final score: " + score
 ```
 
-The language combines a themed vocabulary with conventional programming-language structures, making PotterLang both a functional interpreted language and an exploration of how interpreters work internally.
+The program demonstrates:
+
+* Variables
+* Strings
+* Numbers
+* Functions
+* Parameters
+* Return values
+* Conditionals
+* Loops
+* String concatenation
+* Output
 
 ---
 
 # Summary
 
-PotterLang provides a complete interpreted programming environment built around a magical programming vocabulary.
+PotterLang is a small interpreted programming language built around a wizarding-themed syntax.
 
-The primary language constructs are:
+Its core language consists of:
 
 ```text
-Accio             Variables
+Accio             Variable declaration
 Lumos             Output
-Riddikulus        Conditions
+Legilimens        Input
+Riddikulus        Conditional
 Finite            Else
-TimeTurner        Loops
-Incantation       Functions
-ExpectoPatronum   Return values
+TimeTurner        Loop
+Incantation       Function
+ExpectoPatronum   Return
 Protego           Exception handling
 Crucio            Exception catching
+AvadaKedavra      Program termination
 ```
 
-Programs are written in `.wand` files and executed by the PotterLang interpreter.
+Programs are stored as `.wand` files and executed by the PotterLang interpreter.
 
-The project demonstrates the major stages of interpreter construction:
+The implementation demonstrates the fundamental stages of interpreter construction:
 
 ```text
 Source Code
@@ -1645,4 +2215,6 @@ Tree-Walk Interpretation
 Execution
 ```
 
-PotterLang is intended for experimentation, education, and fun while demonstrating real programming-language implementation techniques.
+PotterLang is designed as an experimental programming language and as a practical demonstration of how a language can be tokenized, parsed, represented as an AST, evaluated through environments, and executed by a tree-walk interpreter.
+
+---
