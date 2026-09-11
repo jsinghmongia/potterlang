@@ -15,6 +15,12 @@ class VarAssignNode(ASTNode):
         self.name = name
         self.expr = expr
 
+class IndexAssignNode(ASTNode):
+    def __init__(self, target, index, expr):
+        self.target = target
+        self.index = index
+        self.expr = expr
+
 class PrintNode(ASTNode):
     def __init__(self, expr):
         self.expr = expr
@@ -41,8 +47,8 @@ class FunctionDefNode(ASTNode):
         self.body = body
 
 class FunctionCallNode(ASTNode):
-    def __init__(self, name: str, args: list):
-        self.name = name
+    def __init__(self, callee, args: list):
+        self.callee = callee
         self.args = args
 
 class ReturnNode(ASTNode):
@@ -73,6 +79,11 @@ class BinaryOpNode(ASTNode):
         self.left = left
         self.op = op
         self.right = right
+
+class UnaryOpNode(ASTNode):
+    def __init__(self, op, operand):
+        self.op = op
+        self.operand = operand
 
 class LiteralNode(ASTNode):
     def __init__(self, value):

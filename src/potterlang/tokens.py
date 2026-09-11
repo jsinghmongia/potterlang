@@ -7,7 +7,7 @@ class TokenType(Enum):
     RIDDIKULUS = auto()     # If
     FINITE = auto()         # Else
     TIMETURNER = auto()     # While
-    AVADAKEDAVRA = auto()   # Exit / Halt
+    AVADAKEDAVRA = auto()   # Exit
     INCANTATION = auto()    # Function def
     EXPECTOPATRONUM = auto()# Return
     LEGILIMENS = auto()     # Input
@@ -26,12 +26,16 @@ class TokenType(Enum):
     MINUS = auto()          # -
     STAR = auto()           # *
     SLASH = auto()          # /
+    PERCENT = auto()        # % (Modulo)
     EQ = auto()             # ==
     NEQ = auto()            # !=
     GT = auto()             # >
     LT = auto()             # <
     GTE = auto()            # >=
     LTE = auto()            # <=
+    AND = auto()            # &&
+    OR = auto()             # ||
+    NOT = auto()            # !
 
     # Delimiters
     LPAREN = auto()         # (

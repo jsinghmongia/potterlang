@@ -1,0 +1,30 @@
+// Binary Search Algorithm in PotterLang
+Incantation binary_search(arr, target) {
+    Accio low = 0
+    Accio high = len(arr) - 1
+
+    TimeTurner (low <= high) {
+        Accio mid = floor((low + high) / 2)
+        
+        Riddikulus (arr[mid] == target) {
+            ExpectoPatronum mid
+        } Finite {
+            Riddikulus (arr[mid] < target) {
+                low = mid + 1
+            } Finite {
+                high = mid - 1
+            }
+        }
+    }
+    ExpectoPatronum -1
+}
+
+Accio numbers = [3, 8, 14, 25, 33, 47, 62, 89]
+Lumos "Searching for 33 in sorted array..."
+Accio idx = binary_search(numbers, 33)
+
+Riddikulus (idx != -1) {
+    Lumos "Found at index: " + idx
+} Finite {
+    Lumos "Element not found."
+}

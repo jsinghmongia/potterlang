@@ -20,7 +20,7 @@ class Parser:
         tok = self.match(token_type)
         if not tok:
             curr = self.current()
-            raise SyntaxError(f"Expected token {token_type.name}, found {curr.type.name} at line {curr.line}")
+            raise SyntaxError(f"Expected {token_type.name}, found {curr.type.name} at line {curr.line}")
         return tok
 
     def parse(self):
@@ -81,8 +81,9 @@ class Parser:
 
         expr = self.parse_expression()
         if isinstance(expr, VariableNode) and self.match(TokenType.ASSIGN):
-            val = self.parse_expression()
-            return VarAssignNode(expr.name, val)
+            return VarAssignNode(expr.name, self.parse_expression())
+        if isinstance(expr, IndexAccessNode) and self.match(TokenType.ASSIGN):
+            return IndexAssignNode(expr.target, expr.index, self.parse_expression())
         return expr
 
     def parse_block(self):
@@ -94,7 +95,19 @@ class Parser:
         return BlockNode(statements)
 
     def parse_expression(self):
-        return self.parse_comparison()
+        return self.parse_logical_or()
+
+    def parse_logical_or(self):
+        node = self.parse_logical_and()
+        while self.match(TokenType.OR):
+            node = BinaryOpNode(node, TokenType.OR, self.parse_logical_and())
+        return node
+
+    def parse_logical_and(self):
+        node = self.parse_comparison()
+        while self.match(TokenType.AND):
+            node = BinaryOpNode(node, TokenType.AND, self.parse_comparison())
+        return node
 
     def parse_comparison(self):
         node = self.parse_term()
@@ -115,13 +128,18 @@ class Parser:
         return node
 
     def parse_factor(self):
-        node = self.parse_postfix()
+        node = self.parse_unary()
         while True:
-            op = self.match(TokenType.STAR, TokenType.SLASH)
+            op = self.match(TokenType.STAR, TokenType.SLASH, TokenType.PERCENT)
             if not op:
                 break
-            node = BinaryOpNode(node, op.type, self.parse_postfix())
+            node = BinaryOpNode(node, op.type, self.parse_unary())
         return node
+
+    def parse_unary(self):
+        if op := self.match(TokenType.NOT, TokenType.MINUS):
+            return UnaryOpNode(op.type, self.parse_unary())
+        return self.parse_postfix()
 
     def parse_postfix(self):
         node = self.parse_primary()
@@ -130,14 +148,14 @@ class Parser:
                 index = self.parse_expression()
                 self.expect(TokenType.RBRACKET)
                 node = IndexAccessNode(node, index)
-            elif isinstance(node, VariableNode) and self.match(TokenType.LPAREN):
+            elif self.match(TokenType.LPAREN):
                 args = []
                 if self.current().type != TokenType.RPAREN:
                     args.append(self.parse_expression())
                     while self.match(TokenType.COMMA):
                         args.append(self.parse_expression())
                 self.expect(TokenType.RPAREN)
-                node = FunctionCallNode(node.name, args)
+                node = FunctionCallNode(node, args)
             else:
                 break
         return node

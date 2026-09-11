@@ -1,10 +1,11 @@
 import sys
 from .lexer import Lexer
 from .parser import Parser
-from .interpreter import Interpreter
-from .environment import Environment
+from .interpreter import Interpreter, create_global_environment
 
-def run(code: str, env: Environment):
+def run(code: str, env=None):
+    if env is None:
+        env = create_global_environment()
     try:
         tokens = Lexer(code).tokenize()
         ast = Parser(tokens).parse()
@@ -15,7 +16,7 @@ def run(code: str, env: Environment):
 def repl():
     print("PotterLang 1.0.0 Interactive REPL")
     print("Enter 'AvadaKedavra' or press Ctrl+C to exit.")
-    env = Environment()
+    env = create_global_environment()
     while True:
         try:
             line = input(">>> ")
@@ -32,7 +33,7 @@ def main():
         try:
             with open(filepath, "r", encoding="utf-8") as f:
                 code = f.read()
-            run(code, Environment())
+            run(code)
         except FileNotFoundError:
             print(f"Error: File '{filepath}' not found.", file=sys.stderr)
             sys.exit(1)
