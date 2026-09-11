@@ -1,21 +1,16 @@
-# 🪄 PotterLang (.wand)
+# PotterLang
 
-A Harry Potter-themed interpreted programming language written in Python.
+A Turing-complete, wizarding-themed interpreted programming language built from scratch in Python. PotterLang features a recursive descent parser, custom dynamic scoping, lexical closures, exception handling, and an interactive browser-based IDE powered by Pyodide and Monaco Editor.
+
+[![PyPI version](https://badge.fury.io/py/potterlang.svg)](https://badge.fury.io/py/potterlang)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+
+---
 
 ## Installation
-bash
-pip install potterlang
-## Quick Start
-Create a file named `spell.wand`:
-potter
-Accio house_points = 50
-Lumos "Evaluating House Points..."
-Riddikulus (house_points > 40) {
-    Lumos "10 points to Gryffindor!"
-} Finite {
-    Lumos "Sent to Azkaban!"
-}
 
-## Run it from any terminal:
-bash
-potter spell.wand
+Install directly via PyPI:
+
+```bash
+pip install potterlang
